@@ -1,0 +1,20 @@
+{
+    "name": "Lightning Client",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer"
+            ],
+            "settings": {
+                "[rust]": {
+                    "editor.formatOnSave": true
+                },
+                "editor.inlayHints.enabled": "offUnlessPressed",
+                "rust-analyzer.lens.enable": false
+            }
+        }
+    }
+}
