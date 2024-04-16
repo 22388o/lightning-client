@@ -6,7 +6,7 @@ _The Lightning Network is a second layer for Bitcoin (BTC) that uses micropaymen
 
 > ⚠️ This is a personal project I'm doing to learn more about the Lightning Network. It is not meant to be used on real nodes. I will add new features over time. The ultimate goal is to implement all BOLTs.
 
-The implementation currently supports the client version of the [BOLT-8][1] encrypted and Authenticated Transport protocol, which performs the handshake with a remote node.
+The implementation currently supports the client version of the [BOLT-8][1] encrypted and authenticated transport protocol, which performs the handshake with a public remote node.
 
 _Note: BOLT stands for Basis of Lightning Technology._
 
