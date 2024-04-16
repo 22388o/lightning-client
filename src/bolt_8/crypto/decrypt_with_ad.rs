@@ -17,8 +17,8 @@ pub fn decrypt_with_ad(
 ) -> Result<Vec<u8>, CryptoError> {
     let cipher = ChaCha20Poly1305::new(key.into());
 
-    // Note: This follows the Noise Protocol convention,
-    //       32 zero bits, followed by a little-endian 64-bit value.
+    // This follows the Noise Protocol convention,
+    // 32 zero bits, followed by a little-endian 64-bit value.
     let mut nonce = [0; 12];
     nonce[4..].copy_from_slice(&n.to_le_bytes());
 

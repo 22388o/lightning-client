@@ -26,7 +26,7 @@ impl ClientProtocol<()> {
 
 impl ClientProtocol<Act0> {
     /// Proceeds to the next handshake phase.
-    pub fn next(self, ls_sk: SecretKey) -> Result<ClientProtocol<Act1>, ProtocolError> {
+    pub fn into_next_phase(self, ls_sk: SecretKey) -> Result<ClientProtocol<Act1>, ProtocolError> {
         Ok(ClientProtocol {
             state: Act1::new(self.state, ls_sk)?,
         })
@@ -43,7 +43,7 @@ impl ClientProtocol<Act1> {
     }
 
     /// Proceeds to the next handshake phase.
-    pub async fn next(
+    pub async fn into_next_phase(
         self,
         stream: &mut (impl AsyncRead + Unpin),
     ) -> Result<ClientProtocol<Act2>, ProtocolError> {
@@ -58,7 +58,7 @@ impl ClientProtocol<Act1> {
 
 impl ClientProtocol<Act2> {
     /// Proceeds to the next handshake phase.
-    pub fn next(self) -> Result<ClientProtocol<Act3>, ProtocolError> {
+    pub fn into_next_phase(self) -> Result<ClientProtocol<Act3>, ProtocolError> {
         Ok(ClientProtocol {
             state: Act3::new(self.state)?,
         })
@@ -75,7 +75,7 @@ impl ClientProtocol<Act3> {
     }
 
     /// Proceeds to the communication phase.
-    pub fn next(self) -> ClientProtocol<Communication> {
+    pub fn into_next_phase(self) -> ClientProtocol<Communication> {
         ClientProtocol {
             state: Communication::new(self.state),
         }

@@ -53,7 +53,7 @@ async fn perform_handshake(args: Args) -> Result<(), eyre::Report> {
     let ls_sk = SecretKey::new(&mut secp256k1::rand::thread_rng());
 
     let client_proto = client_proto
-        .next(ls_sk)
+        .into_next_phase(ls_sk)
         .map_err(|e| eyre::eyre!("Failed to perform handshake: {e}"))?;
 
     client_proto
@@ -62,12 +62,12 @@ async fn perform_handshake(args: Args) -> Result<(), eyre::Report> {
         .map_err(|e| eyre::eyre!("Failed to send hanshake message to remote node: {e}"))?;
 
     let client_proto = client_proto
-        .next(&mut stream)
+        .into_next_phase(&mut stream)
         .await
         .map_err(|e| eyre::eyre!("Failed to perform handshake: {e}"))?;
 
     let client_proto = client_proto
-        .next()
+        .into_next_phase()
         .map_err(|e| eyre::eyre!("Failed to perform handshake: {e}"))?;
 
     client_proto
@@ -75,7 +75,7 @@ async fn perform_handshake(args: Args) -> Result<(), eyre::Report> {
         .await
         .map_err(|e| eyre::eyre!("Failed to send hanshake message to remote node: {e}"))?;
 
-    let mut client_proto = client_proto.next();
+    let mut client_proto = client_proto.into_next_phase();
 
     let message = client_proto
         .read_message(&mut stream)
